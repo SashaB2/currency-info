@@ -1,0 +1,31 @@
+version: '3.2'
+services:
+  cipgsql:
+    image: postgres:10-alpine
+    volumes:
+      - type: volume
+        source: ci_pgsql_data
+        target: /var/lib/pgsql/data
+    environment:
+      - "POSTGRES_USER=currencyinfo"
+      - "POSTGRES_PASSWORD=currencyinfo"
+      - "PGDATA=/var/lib/pgsql/data"
+    ports:
+      - "5456:5432"
+
+  cipgsql-test:
+    image: postgres:10-alpine
+    volumes:
+      - type: volume
+        source: ci_pgsql_test_data
+        target: /var/lib/pgsql/data
+    environment:
+      - "POSTGRES_USER=currencyinfo_test"
+      - "POSTGRES_PASSWORD=currencyinfo_test"
+      - "PGDATA=/var/lib/pgsql/data"
+    ports:
+      - "5466:5432"
+
+volumes:
+  ci_pgsql_data:
+  ci_pgsql_test_data:
